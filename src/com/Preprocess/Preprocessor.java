@@ -9,28 +9,32 @@ public class Preprocessor
     Stack s;
     BasicFile bf;
     private boolean isValid = true;
+    private String fileContent = "";
 
     public Preprocessor()
     {
         this.s = new Stack();
         this.bf = new BasicFile();
+        this.fileContent = this.bf.readFile();
 
     }
 
+    public String getFileContent(){
+        return fileContent;
+    }
 
     public boolean isValid()
     {
-        String fileContent = this.bf.readFile();
-        for (int count = 0; count < fileContent.length(); count++)
+        for (int count = 0; count < this.fileContent.length(); count++)
         {
-            char character = fileContent.charAt(count);
+            char character = this.fileContent.charAt(count);
             try
             {
-                if (character == Symbols.FORWARD_SLASH && fileContent.charAt(count + 1) == Symbols.STAR)
+                if (character == Symbols.FORWARD_SLASH && this.fileContent.charAt(count + 1) == Symbols.STAR)
                 {
                     s.push(Symbols.STAR);
 
-                }else if(character == Symbols.FORWARD_SLASH && fileContent.charAt(count - 1) == Symbols.STAR)
+                }else if(character == Symbols.FORWARD_SLASH && this.fileContent.charAt(count - 1) == Symbols.STAR)
                 {
                     try
                     {
@@ -59,7 +63,6 @@ public class Preprocessor
 
     public boolean isValid(char left, char right)
     {
-        String fileContent = this.bf.readFile();
         for (int count = 0; count < fileContent.length(); count++)
         {
             char character = fileContent.charAt(count);
